@@ -19,9 +19,10 @@ sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
 from java.lang import System
 import com.alibaba.fastjson.JSON as JSON
 
+from reportfilter import Filter
 
 def runner(offsets):
-    
+    fltr = Filter()
     queues = {}
     bmp_map = {}
     offset_update_freq = config.offset_update_freq
@@ -49,7 +50,9 @@ def runner(offsets):
 
             if v[1] == 'PUT':
                 pid, op, ts, ipaddr, doc_id, payload = v
+                filtered = fltr.filter_document(payload)
                 System.out.println('%s %s %d %s %s %s' % (htp[1], op, ts, ipaddr, doc_id, JSON.toJSONString(payload)))
+                System.out.println('filtered %s' % (JSON.toJSONString(payload)))
 
 
 def parse_offsets(filex):
