@@ -51,10 +51,6 @@ def runner(offsets):
                 pid, op, ts, ipaddr, doc_id, payload = v
                 System.out.println('%s %s %d %s %s %s' % (htp[1], op, ts, ipaddr, doc_id, JSON.toJSONString(payload)))
 
-            elif v[1] == 'DELETE':
-                pid, op, ts, ipaddr, doc_id = v
-                System.out.println('%s %s %d %s %s' % (htp[1], op, ts, ipaddr, doc_id))
-
 
 def parse_offsets(filex):
     offsets = {}

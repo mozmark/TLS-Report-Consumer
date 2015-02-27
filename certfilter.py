@@ -9,14 +9,9 @@ cert_factory = CertificateFactory.getInstance('X.509')
 svc = get_eTLD_service()
 
 class CertChainFilter:
-    def filter_document(self, document):
-        failedCertChain = document['failedCertChain']
-        document['failedCertChain'] = None
-        document['restOfCertChain'] = failedCertChain[1:]
-        cert = failedCertChain[0]
-        cert_data = b64decode(cert)
+    def redact_ee(self, ee):
+        cert_data = b64decode(ee)
         x509_cert = cert_factory.generateCertificate(StringBufferInputStream(cert_data))
-        #x509_cert = X509Certificate.getInstance(cert_data)
         dn = x509_cert.getSubjectDN().getName()
         LDAP_dn = LdapName(dn)
         redacted_ee = {}
@@ -25,4 +20,12 @@ class CertChainFilter:
             if rdn.getType() == 'CN':
                 cn = rdn.getValue()
         redacted_ee['redactedCN'] = svc.get_base_domain(cn)
+        return redacted_ee
+
+    def filter_document(self, document):
+        failedCertChain = document['failedCertChain']
+        document['failedCertChain'] = None
+        document['restOfCertChain'] = failedCertChain[1:]
+        cert = failedCertChain[0]
+        redacted_ee = self.redact_ee(cert)
         document['redactedEE'] = redacted_ee

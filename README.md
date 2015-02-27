@@ -1,10 +1,11 @@
-bagheera-sslerrorconsumer-jython
-====================================
+TLS-Report-Consumer
+===================
 
 A Jython report consumer for Firefox TLS Error reports based on
 https://github.com/meyarivan/kafka-simpleconsumer-jython.
 
-Requires Jython > 2.7.4
+Requires Jython > 2.7.4 (datetime.total_seconds is missing from >=2.7.4) -
+you may need to build from jython trunk.
 
 Requires following libraries under lib/ subdir.
 
