@@ -50,10 +50,12 @@ def runner(offsets):
 
             if v[1] == 'PUT':
                 pid, op, ts, ipaddr, doc_id, payload = v
-                filtered = fltr.filter_document(payload)
-                System.out.println('%s %s %d %s %s %s' % (htp[1], op, ts, ipaddr, doc_id, JSON.toJSONString(payload)))
-                System.out.println('filtered %s' % (JSON.toJSONString(payload)))
-
+                json_payload = JSON.toJSONString(payload)
+                #TODO: figure out less braindead way of working with
+                # java.util.HashMaps in jython
+                filtered = json.loads(json_payload)
+                System.out.println('%s %s %d %s %s %s' % (htp[1], op, ts, ipaddr, doc_id, json_payload))
+                System.out.println('filtered %s' % (json.dumps(filtered)))
 
 def parse_offsets(filex):
     offsets = {}
