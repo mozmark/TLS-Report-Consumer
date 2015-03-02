@@ -55,6 +55,7 @@ def runner(offsets):
                 # java.util.HashMaps in jython
                 filtered = json.loads(json_payload)
                 System.out.println('%s %s %d %s %s %s' % (htp[1], op, ts, ipaddr, doc_id, json_payload))
+                fltr.filter_document(filtered)
                 System.out.println('filtered %s' % (json.dumps(filtered)))
 
 def parse_offsets(filex):
