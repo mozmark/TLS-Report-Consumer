@@ -52,7 +52,7 @@ class Filter:
         filters = [x() for x in enabled_filters]
 
         for filt in filters:
-            filt.filter_document(parsed)
+            filt.filter_document(document)
 
 if __name__ == '__main__':
     # load a sample report
