@@ -24,8 +24,17 @@ class CertChainFilter:
 
     def filter_document(self, document):
         failedCertChain = document['failedCertChain']
-        document['failedCertChain'] = None
-        document['restOfCertChain'] = failedCertChain[1:]
-        cert = failedCertChain[0]
-        redacted_ee = self.redact_ee(cert)
-        document['redactedEE'] = redacted_ee
+        try:
+            if failedCertChain:
+                document['failedCertChain'] = None
+                document['restOfCertChain'] = failedCertChain[1:]
+                if len(failedCertChain) > 0:
+                    cert = failedCertChain[0]
+                    redacted_ee = self.redact_ee(cert)
+                    document['redactedEE'] = redacted_ee
+        except:
+            message = 'problem redacting cert chain'
+            try:
+                document['errors'].append(message)
+            except:
+                document['errors'] = [message]
