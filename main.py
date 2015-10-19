@@ -47,15 +47,15 @@ def runner(offsets):
 
     strtime = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
-    fos = FileOutputStream("redacted_%s.gz"%(strtime))
+    fos = FileOutputStream("redacted/redacted_%s.gz"%(strtime))
     gos = GZIPOutputStream(fos)
     writer = PrintWriter(gos)
 
-    uf_fos = FileOutputStream("unfiltered_%s.gz"%(strtime))
+    uf_fos = FileOutputStream("raw/unfiltered_%s.gz"%(strtime))
     uf_gos = GZIPOutputStream(uf_fos)
     uf_writer = PrintWriter(uf_gos)
 
-    err_fos = FileOutputStream("errors_%s.gz"%(strtime))
+    err_fos = FileOutputStream("errors/errors_%s.gz"%(strtime))
     err_gos = GZIPOutputStream(err_fos)
     err_writer = PrintWriter(err_gos)
 
